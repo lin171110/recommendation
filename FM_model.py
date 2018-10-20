@@ -9,7 +9,7 @@ import tensorflow as tf
 from tqdm import tqdm_notebook as tqdm
 
 
-def vectorize_dic(dic,ix=None,p=None,n=0,g=0):
+def vectorize_dic(dic,ix=None,p=None,n=0,g=0): #将数据处理成一个矩阵作为输入，矩阵的大小是用户数 × 电影数，使用的是scipy.sparse中的csr.csr_matrix
     """
     dic -- dictionary of feature lists. Keys are the name of features
     ix -- index generator (default None)
@@ -80,7 +80,7 @@ print(x_train)
 print(x_train.shape)
 print (x_test.shape)
 
-
+#估计值预算
 n,p = x_train.shape
 
 k = 10
@@ -106,7 +106,7 @@ tf.pow(
 
 
 y_hat = tf.add(linear_terms,pair_interactions)
-
+#定义损失函数，并利用梯度下降法进行参数的更新
 lambda_w = tf.constant(0.001,name='lambda_w')
 lambda_v = tf.constant(0.001,name='lambda_v')
 
@@ -123,7 +123,7 @@ loss = tf.add(error,l2_norm)
 
 train_op = tf.train.GradientDescentOptimizer(learning_rate=0.01).minimize(loss)
 
-
+#模型训练
 epochs = 10
 batch_size = 1000
 
